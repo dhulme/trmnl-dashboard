@@ -1,0 +1,385 @@
+{% comment %}
+  Change only these aliases if a merged-plugin source ID changes.
+{% endcomment %}
+{% assign calendar = google_calendar_460123 %}
+{% assign weather = weather_462211 %}
+{% assign chum = private_plugin_464380.merge_variables %}
+
+<div class="layout layout--col gap--none">
+  <!-- Top half: weather summary -->
+  <section class="weather-panel h--[50cqh] p--6 md:p--8 lg:p--12">
+    <div class="grid grid--cols-4 grid--no-gap h--full">
+      <div class="col--span-3 weather-primary pr--6 md:pr--8 lg:pr--12">
+        <div class="flex flex--row flex--between flex--center-y">
+          <div>
+            <span class="label label--small md:label--base lg:label--large">
+              {{ chum.loc.name }}
+            </span>
+
+            <div class="flex flex--row flex--center-y gap--large md:gap--xlarge">
+              <img
+                class="weather-icon"
+                src="{{ weather.weather_image }}"
+                alt="{{ weather.right_now_conditions }}"
+              >
+
+              <span class="value value--mega lg:value--peta weather-temperature">
+                {{ weather.temperature | round }}°
+              </span>
+
+              <div class="weather-condition">
+                <span class="title title--large lg:title--xxlarge">
+                  {{ weather.right_now_conditions }}
+                </span>
+                <span class="description description--large lg:description--xxlarge">
+                  Today {{ weather.forecast.today.mintemp | round }}°–
+                  {{ weather.forecast.today.maxtemp | round }}°
+                </span>
+                <span class="description description--small lg:description--base">
+                  Updated {{ chum.updated }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid--cols-5 grid--no-gap weather-meta">
+          <div class="weather-metric">
+            <span class="label label--small lg:label--base">Sunrise</span>
+            <span class="value value--small lg:value--large">
+              {{ weather.forecast.right_now.sunrise }}
+            </span>
+          </div>
+          <div class="weather-metric">
+            <span class="label label--small lg:label--base">Sunset</span>
+            <span class="value value--small lg:value--large">
+              {{ weather.forecast.right_now.sunset }}
+            </span>
+          </div>
+          <div class="weather-metric">
+            <span class="label label--small lg:label--base">Wind</span>
+            <span class="value value--small lg:value--large">
+              {{ weather.forecast.right_now.wind.direction_cardinal }}
+              {{ weather.forecast.right_now.wind.max | round }}
+              {{ weather.forecast.right_now.wind.units }}
+            </span>
+          </div>
+          <div class="weather-metric">
+            <span class="label label--small lg:label--base">Rain chance</span>
+            <span class="value value--small lg:value--large">
+              {{ weather.forecast.today.precip.probability }}%
+            </span>
+          </div>
+          <div class="weather-metric">
+            <span class="label label--small lg:label--base">UV index</span>
+            <span class="value value--small lg:value--large">
+              {{ weather.forecast.today.uv_index }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="col--span-1 weather-stats pl--6 md:pl--8 lg:pl--12">
+        <div class="weather-stat">
+          <span class="value value--large lg:value--xxlarge">
+            {{ weather.feels_like | round }}°
+          </span>
+          <span class="label label--small lg:label--base">Feels like</span>
+        </div>
+        <div class="weather-stat">
+          <span class="value value--large lg:value--xxlarge">
+            {{ weather.humidity }}%
+          </span>
+          <span class="label label--small lg:label--base">Humidity</span>
+        </div>
+        <div class="weather-stat">
+          <span class="value value--large lg:value--xxlarge">
+            {{ chum.current.w }}
+          </span>
+          <span class="label label--small lg:label--base">Wind km/h</span>
+        </div>
+        <div class="weather-stat">
+          <span class="value value--large lg:value--xxlarge">
+            {{ chum.aqi.text }}
+          </span>
+          <span class="label label--small lg:label--base">Air quality</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Bottom half: precipitation and calendar -->
+  <section class="h--[50cqh] grid grid--cols-2 grid--no-gap">
+    <section class="col--span-1 precipitation-panel p--6 md:p--8 lg:p--12">
+      <div class="flex flex--row flex--between flex--center-y">
+        <div>
+          <span class="title title--base lg:title--xlarge">
+            Hourly precipitation
+          </span>
+          <span class="description description--small lg:description--large">
+            {{ chum.upcoming_precip_text }}
+          </span>
+        </div>
+
+        <span class="label label--small lg:label--large label--filled">
+          {% if chum.upcoming_rain_for_display.show_yes %}
+            {{ chum.upcoming_rain_for_display.percentage }}% chance
+          {% else %}
+            No rain expected
+          {% endif %}
+        </span>
+      </div>
+
+      <div class="divider my--4 lg:my--6"></div>
+
+      <div class="precipitation-chart">
+        {% for hour in chum.hourly limit: 24 %}
+          <div class="hour">
+            <span class="description description--small lg:description--base">
+              {{ hour.t }}°
+            </span>
+
+            <div class="rain-track">
+              <div
+                class="rain-bar {% if hour.p >= 50 %}rain-bar--likely{% elsif hour.p >= 25 %}rain-bar--possible{% endif %}"
+                style="height: {{ hour.p | at_least: 4 }}%;"
+              ></div>
+            </div>
+
+            <span class="label label--small lg:label--base">{{ hour.p }}%</span>
+            <span class="hour-time description description--small">
+              {{ hour.tm | replace: ":00 ", " " | replace: " AM", "a" | replace: " PM", "p" }}
+            </span>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="col--span-1 calendar-panel p--6 md:p--8 lg:p--12">
+      <div class="flex flex--row flex--between flex--center-y">
+        <div>
+          <span class="title title--base lg:title--xlarge">Upcoming events</span>
+          <span class="description description--small lg:description--large">
+            {{ calendar.tz }}
+          </span>
+        </div>
+      </div>
+
+      <div class="divider my--4 lg:my--6"></div>
+
+      <div
+        class="flex flex--col gap--small calendar-events"
+        data-overflow="true"
+        data-overflow-counter="true"
+      >
+        {% assign displayed_date = "" %}
+
+        {% for event in calendar.events %}
+          {% assign event_date = event.start | date: "%a, %-d %b" %}
+
+          {% if event_date != displayed_date %}
+            <span
+              class="label label--small lg:label--base label--filled group-header"
+              data-group-header="true"
+            >
+              {{ event_date }}
+            </span>
+            {% assign displayed_date = event_date %}
+          {% endif %}
+
+          <div class="item calendar-event">
+            <div class="meta">
+              <span
+                class="event-marker"
+                {% if event.background_color %}
+                  style="background-color: {{ event.background_color }};"
+                {% endif %}
+              ></span>
+            </div>
+
+            <div class="content">
+              <span
+                class="title title--small lg:title--base"
+                data-clamp="1"
+                data-clamp-lg="2"
+              >
+                {{ event.summary | strip }}
+              </span>
+
+              <span class="description description--small lg:description--base">
+                {% if event.all_day %}
+                  All day
+                {% else %}
+                  {{ event.start | date: "%H:%M" }}–{{ event.end | date: "%H:%M" }}
+                {% endif %}
+                {% if event.location %}
+                  · {{ event.location }}
+                {% endif %}
+              </span>
+            </div>
+          </div>
+        {% else %}
+          <span class="description description--large">No upcoming events.</span>
+        {% endfor %}
+      </div>
+    </section>
+  </section>
+</div>
+
+<style>
+  .weather-panel {
+    border-bottom: var(--border-width, 2px) solid currentColor;
+  }
+
+  .weather-primary {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: var(--border-width, 2px) solid currentColor;
+  }
+
+  .weather-icon {
+    width: min(22cqw, 384px);
+    height: min(22cqw, 384px);
+    object-fit: contain;
+    filter: grayscale(100%) contrast(1.2);
+  }
+
+  .weather-temperature {
+    letter-spacing: -0.08em;
+    line-height: 0.85;
+  }
+
+  .weather-condition {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .weather-meta {
+    border-top: var(--border-width, 2px) solid currentColor;
+  }
+
+  .weather-metric {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 1rem;
+    border-right: var(--border-width, 2px) solid currentColor;
+  }
+
+  .weather-metric:first-child {
+    padding-left: 0;
+  }
+
+  .weather-metric:last-child {
+    border-right: 0;
+  }
+
+  .weather-stats {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+  }
+
+  .weather-stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: var(--border-width, 2px) solid currentColor;
+  }
+
+  .weather-stat:last-child {
+    border-bottom: 0;
+  }
+
+  .precipitation-panel {
+    border-right: var(--border-width, 2px) solid currentColor;
+  }
+
+  .precipitation-chart {
+    height: calc(100% - 7rem);
+    display: flex;
+    align-items: stretch;
+    gap: 0.2rem;
+  }
+
+  .hour {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 0;
+  }
+
+  .rain-track {
+    display: flex;
+    align-items: flex-end;
+    width: 65%;
+    height: 100%;
+    min-height: 6rem;
+    margin: 0.5rem 0;
+    background: repeating-linear-gradient(
+      to top,
+      var(--gray-30, #ccc) 0,
+      var(--gray-30, #ccc) 1px,
+      transparent 1px,
+      transparent 25%
+    );
+  }
+
+  .rain-bar {
+    width: 100%;
+    min-height: 3px;
+    background: var(--gray-50, #888);
+  }
+
+  .rain-bar--possible {
+    background: var(--gray-70, #555);
+  }
+
+  .rain-bar--likely {
+    background: #000;
+  }
+
+  .hour-time {
+    margin-top: 0.4rem;
+    white-space: nowrap;
+    transform: rotate(-45deg);
+    transform-origin: top center;
+  }
+
+  .calendar-events {
+    height: calc(100% - 6rem);
+  }
+
+  .event-marker {
+    display: block;
+    width: 0.8rem;
+    height: 0.8rem;
+    margin-top: 0.25rem;
+    background: #000;
+    border-radius: 50%;
+    filter: grayscale(100%) contrast(1.25);
+  }
+
+  @container (max-width: 700px) {
+    .weather-icon {
+      width: 17cqw;
+      height: 17cqw;
+    }
+
+    .weather-condition {
+      display: none;
+    }
+
+    .weather-metric {
+      padding: 0.45rem;
+    }
+
+    .hour:nth-child(even) {
+      display: none;
+    }
+  }
+</style>
