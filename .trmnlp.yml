@@ -1,14 +1,262 @@
-# TRMNLP configuration
-# {{ env.VARIABLE }} interpolation is available here
 ---
-# auto-reload when files change (`watch: false` to disable)
 watch:
-  - .trmnlp.yml
-  - src
-
-# values of custom fields (defined in src/settings.yml)
-custom_fields: {}
-
-# override variables
+- ".trmnlp.yml"
+- src
+custom_fields:
+  test: test
 variables:
   trmnl: {}
+  google_calendar_460123:
+    tz: Europe/London
+    events:
+      - end: "2026-09-13"
+        start: "2026-09-12"
+        status: confirmed
+        all_day: true
+        calname: ohpn2oam39jp02uub20i8os9nqp3jbkf@import.calendar.google.com
+        summary: "Medicine runs out "
+        end_full: "2026-09-13"
+        location: null
+        date_time: "2026-09-12"
+        start_full: "2026-09-12"
+        description: "\n"
+        background_color: "#f691b2"
+    first_day: 1
+    zoom_mode: false
+    fixed_week: true
+    date_format: short
+    scroll_time: "08:00:00"
+    time_format: "24_hrs"
+    today_in_tz: "2026-09-12T00:00:00.000+01:00"
+    event_layout: rolling_month
+    month_header: false
+    calendar_names:
+      dhulme2@gmail.com: Google Calendar
+      8l0pmpm73l9nsfa0khpp5o59m4@group.calendar.google.com: Meals
+      family15179779871164771306@group.calendar.google.com: Family
+      ohpn2oam39jp02uub20i8os9nqp3jbkf@import.calendar.google.com: Calendar
+    shade_weekends: true
+    colorize_events: true
+    highlight_today: true
+    scroll_time_end: "24:00:00"
+    auto_scroll_time: true
+    quadrant_columns: 2
+    show_week_numbers: false
+    include_event_time: true
+    now_indicator_span: current_day
+    show_now_indicator: false
+    vertical_alignment: center
+    week_header_format: null
+    include_description: true
+    now_indicator_layer: behind_events
+    rolling_advancement: week
+    auto_scroll_time_end: true
+  weather_462211:
+    forecast:
+      today:
+        icon: partly-cloudy-day
+        precip:
+          icon: chance-rain
+          units: mm
+          amount: null
+          probability: 10
+        maxtemp: 22.0
+        mintemp: 11.0
+        uv_index: 5
+        conditions: Partly Cloudy
+        day_override: null
+      tomorrow:
+        icon: rainy
+        precip:
+          icon: chance-rain
+          probability: 50
+        maxtemp: 23.0
+        mintemp: 17.0
+        uv_index: 4
+        conditions: Rain Likely
+        day_override: null
+      right_now:
+        icon: partly-cloudy-day
+        wind:
+          max: 4
+          gust: 9.0
+          units: mph
+          direction_cardinal: SW
+        sunset: "19:24"
+        sunrise: "06:33"
+        humidity: 62
+        conditions: Partly Cloudy
+        feels_like: 17
+        sunset_unix: 1789237459
+        temperature: 17
+        sunrise_unix: 1789191210
+    humidity: 62
+    feels_like: 17
+    utc_offset: 3600
+    temperature: 17
+    time_format: "%H:%M"
+    data_provider: tempest
+    weather_image: https://tempestwx.com/images/Updated/partly-cloudy-day.svg
+    today_conditions: Partly Cloudy
+    today_weather_image: https://tempestwx.com/images/Updated/partly-cloudy-day.svg
+    right_now_conditions: Partly Cloudy
+    tomorrow_weather_image: https://tempestwx.com/images/Updated/rainy.svg
+  private_plugin_464380:
+    merge_variables:
+      aqi:
+        text: Good
+        value: 1
+      loc:
+        lat: 51.409
+        lon: -0.787
+        name: Amen Corner, Berkshire
+        tz_id: Europe/London
+      low: 12
+      high: 23
+      daily:
+        - d: Sunday
+          i: rainy
+          n: 16
+          p: 82
+          x: 23
+          ds: Sun
+        - d: Monday
+          i: cloudy
+          n: 15
+          p: 49
+          x: 25
+          ds: Mon
+      hourly:
+        - i: cloudy
+          p: 20
+          t: 15
+          tm: "12:00 AM"
+        - i: partly_cloudy_night
+          p: 14
+          t: 14
+          tm: "1:00 AM"
+        - i: clear_night
+          p: 12
+          t: 14
+          tm: "2:00 AM"
+        - i: cloudy
+          p: 29
+          t: 13
+          tm: "3:00 AM"
+        - i: partly_cloudy_night
+          p: 21
+          t: 13
+          tm: "4:00 AM"
+        - i: cloudy
+          p: 32
+          t: 12
+          tm: "5:00 AM"
+        - i: cloudy
+          p: 30
+          t: 12
+          tm: "6:00 AM"
+        - i: clear_day
+          p: 15
+          t: 12
+          tm: "7:00 AM"
+        - i: cloudy
+          p: 23
+          t: 13
+          tm: "8:00 AM"
+        - i: cloudy
+          p: 17
+          t: 15
+          tm: "9:00 AM"
+        - i: clear_day
+          p: 3
+          t: 17
+          tm: "10:00 AM"
+        - i: cloudy
+          p: 8
+          t: 19
+          tm: "11:00 AM"
+        - i: cloudy
+          p: 12
+          t: 20
+          tm: "12:00 PM"
+        - i: cloudy
+          p: 13
+          t: 20
+          tm: "1:00 PM"
+        - i: cloudy
+          p: 12
+          t: 21
+          tm: "2:00 PM"
+        - i: cloudy
+          p: 9
+          t: 23
+          tm: "3:00 PM"
+        - i: cloudy
+          p: 13
+          t: 23
+          tm: "4:00 PM"
+        - i: cloudy
+          p: 12
+          t: 23
+          tm: "5:00 PM"
+        - i: cloudy
+          p: 14
+          t: 22
+          tm: "6:00 PM"
+        - i: cloudy
+          p: 16
+          t: 21
+          tm: "7:00 PM"
+        - i: rainy
+          p: 21
+          t: 20
+          tm: "8:00 PM"
+        - i: cloudy
+          p: 21
+          t: 19
+          tm: "9:00 PM"
+        - i: cloudy
+          p: 26
+          t: 17
+          tm: "10:00 PM"
+        - i: rainy
+          p: 29
+          t: 17
+          tm: "11:00 PM"
+        - i: rainy
+          p: 30
+          t: 17
+          tm: "12:00 AM"
+      metric: true
+      current:
+        d: Sunny
+        f: 13
+        h: 56
+        i: clear_day
+        t: 17
+        u: 2
+        w: 12
+        sr: "06:33 AM"
+        ss: "07:25 PM"
+        metric: true
+      updated: "10:18 AM"
+      alert_text: null
+      overall_low: 12
+      overall_high: 25
+      alert_event_type: null
+      deployment_version: v5_weatherapi_smart_rain_metric
+      live_location_time: null
+      upcoming_precip_icon: rainy
+      upcoming_precip_text: Rain possible this evening
+      upcoming_precip_type: rain
+      upcoming_rain_for_display:
+        show_yes: true
+        percentage: 17
+    markup_full_blob_id: 18515981
+    markup_shared_blob_id: 18516649
+    markup_quadrant_blob_id: 18516640
+    markup_half_vertical_blob_id: 18516596
+    markup_half_horizontal_blob_id: 18516505
+    custom_fields_values:
+      metric: celsius
+      user_location: 51.40265944797803,-0.7832650874154412

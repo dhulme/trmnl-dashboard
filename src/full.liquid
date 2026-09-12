@@ -7,7 +7,7 @@
 
 <div class="layout layout--col gap--none">
   <!-- Top half: weather summary -->
-  <section class="weather-panel h--[50cqh] p--6 md:p--8 lg:p--12">
+  <section class="weather-panel h--[50cqh] p--6 md:p--8 lg:p--8">
     <div class="grid grid--cols-4 grid--no-gap h--full">
       <div class="col--span-3 weather-primary pr--6 md:pr--8 lg:pr--12">
         <div class="flex flex--row flex--between flex--center-y">
@@ -16,22 +16,22 @@
               {{ chum.loc.name }}
             </span>
 
-            <div class="flex flex--row flex--center-y gap--large md:gap--xlarge">
+            <div class="flex flex--row flex--center-y gap--large">
               <img
                 class="weather-icon"
                 src="{{ weather.weather_image }}"
                 alt="{{ weather.right_now_conditions }}"
               >
 
-              <span class="value value--mega lg:value--peta weather-temperature">
+              <span class="value value--mega lg:value--mega weather-temperature">
                 {{ weather.temperature | round }}°
               </span>
 
               <div class="weather-condition">
-                <span class="title title--large lg:title--xxlarge">
+                <span class="title title--base lg:title--large">
                   {{ weather.right_now_conditions }}
                 </span>
-                <span class="description description--large lg:description--xxlarge">
+                <span class="description description--base lg:description--large">
                   Today {{ weather.forecast.today.mintemp | round }}°–
                   {{ weather.forecast.today.maxtemp | round }}°
                 </span>
@@ -46,19 +46,19 @@
         <div class="grid grid--cols-5 grid--no-gap weather-meta">
           <div class="weather-metric">
             <span class="label label--small lg:label--base">Sunrise</span>
-            <span class="value value--small lg:value--large">
+            <span class="value value--small lg:value--base">
               {{ weather.forecast.right_now.sunrise }}
             </span>
           </div>
           <div class="weather-metric">
             <span class="label label--small lg:label--base">Sunset</span>
-            <span class="value value--small lg:value--large">
+            <span class="value value--small lg:value--base">
               {{ weather.forecast.right_now.sunset }}
             </span>
           </div>
           <div class="weather-metric">
             <span class="label label--small lg:label--base">Wind</span>
-            <span class="value value--small lg:value--large">
+            <span class="value value--small lg:value--base">
               {{ weather.forecast.right_now.wind.direction_cardinal }}
               {{ weather.forecast.right_now.wind.max | round }}
               {{ weather.forecast.right_now.wind.units }}
@@ -66,40 +66,40 @@
           </div>
           <div class="weather-metric">
             <span class="label label--small lg:label--base">Rain chance</span>
-            <span class="value value--small lg:value--large">
+            <span class="value value--small lg:value--base">
               {{ weather.forecast.today.precip.probability }}%
             </span>
           </div>
           <div class="weather-metric">
             <span class="label label--small lg:label--base">UV index</span>
-            <span class="value value--small lg:value--large">
+            <span class="value value--small lg:value--base">
               {{ weather.forecast.today.uv_index }}
             </span>
           </div>
         </div>
       </div>
 
-      <aside class="col--span-1 weather-stats pl--6 md:pl--8 lg:pl--12">
+      <aside class="col--span-1 weather-stats pl--6 md:pl--8 lg:pl--8">
         <div class="weather-stat">
-          <span class="value value--large lg:value--xxlarge">
+          <span class="value value--base lg:value--base">
             {{ weather.feels_like | round }}°
           </span>
           <span class="label label--small lg:label--base">Feels like</span>
         </div>
         <div class="weather-stat">
-          <span class="value value--large lg:value--xxlarge">
+          <span class="value value--base lg:value--base">
             {{ weather.humidity }}%
           </span>
           <span class="label label--small lg:label--base">Humidity</span>
         </div>
         <div class="weather-stat">
-          <span class="value value--large lg:value--xxlarge">
+          <span class="value value--base lg:value--base">
             {{ chum.current.w }}
           </span>
           <span class="label label--small lg:label--base">Wind km/h</span>
         </div>
         <div class="weather-stat">
-          <span class="value value--large lg:value--xxlarge">
+          <span class="value value--base lg:value--base">
             {{ chum.aqi.text }}
           </span>
           <span class="label label--small lg:label--base">Air quality</span>
@@ -110,12 +110,9 @@
 
   <!-- Bottom half: precipitation and calendar -->
   <section class="h--[50cqh] grid grid--cols-2 grid--no-gap">
-    <section class="col--span-1 precipitation-panel p--6 md:p--8 lg:p--12">
+    <section class="col--span-1 precipitation-panel p--6 md:p--8 lg:p--8">
       <div class="flex flex--row flex--between flex--center-y">
         <div>
-          <span class="title title--base lg:title--xlarge">
-            Hourly precipitation
-          </span>
           <span class="description description--small lg:description--large">
             {{ chum.upcoming_precip_text }}
           </span>
@@ -130,7 +127,7 @@
         </span>
       </div>
 
-      <div class="divider my--4 lg:my--6"></div>
+      <div class="my--2 lg:my--4"></div>
 
       <div class="precipitation-chart">
         {% for hour in chum.hourly limit: 24 %}
@@ -140,33 +137,23 @@
             </span>
 
             <div class="rain-track">
+              {% assign bar_height = hour.p | times: 3 | at_least: 6 %}
               <div
                 class="rain-bar {% if hour.p >= 50 %}rain-bar--likely{% elsif hour.p >= 25 %}rain-bar--possible{% endif %}"
-                style="height: {{ hour.p | at_least: 4 }}%;"
+                style="height: {{ bar_height | at_most: 100 }}%;"
               ></div>
             </div>
 
             <span class="label label--small lg:label--base">{{ hour.p }}%</span>
             <span class="hour-time description description--small">
-              {{ hour.tm | replace: ":00 ", " " | replace: " AM", "a" | replace: " PM", "p" }}
+              {{ hour.tm | replace: ":00 ", " " | replace: " AM", "am" | replace: " PM", "pm" }}
             </span>
           </div>
         {% endfor %}
       </div>
     </section>
 
-    <section class="col--span-1 calendar-panel p--6 md:p--8 lg:p--12">
-      <div class="flex flex--row flex--between flex--center-y">
-        <div>
-          <span class="title title--base lg:title--xlarge">Upcoming events</span>
-          <span class="description description--small lg:description--large">
-            {{ calendar.tz }}
-          </span>
-        </div>
-      </div>
-
-      <div class="divider my--4 lg:my--6"></div>
-
+    <section class="col--span-1 calendar-panel p--6 md:p--8 lg:p--8">
       <div
         class="flex flex--col gap--small calendar-events"
         data-overflow="true"
@@ -228,19 +215,26 @@
 
 <style>
   .weather-panel {
+    min-height: 0;
     border-bottom: var(--border-width, 2px) solid currentColor;
   }
 
   .weather-primary {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    min-height: 0;
+    overflow: hidden;
     border-right: var(--border-width, 2px) solid currentColor;
   }
 
+  .weather-primary > div:first-child {
+    min-height: 0;
+    overflow: hidden;
+  }
+
   .weather-icon {
-    width: min(22cqw, 384px);
-    height: min(22cqw, 384px);
+    width: min(17cqw, 220px);
+    height: min(17cqw, 220px);
     object-fit: contain;
     filter: grayscale(100%) contrast(1.2);
   }
@@ -279,14 +273,26 @@
 
   .weather-stats {
     display: grid;
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    min-height: 0;
+    overflow: hidden;
   }
 
   .weather-stat {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 0.35rem 0 0.5rem;
     border-bottom: var(--border-width, 2px) solid currentColor;
+  }
+
+  .weather-stat .value,
+  .weather-stat .label {
+    line-height: 1;
+  }
+
+  .weather-stat .label {
+    margin-top: 0.2rem;
   }
 
   .weather-stat:last-child {
@@ -294,11 +300,15 @@
   }
 
   .precipitation-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
     border-right: var(--border-width, 2px) solid currentColor;
   }
 
   .precipitation-chart {
-    height: calc(100% - 7rem);
+    flex: 1 1 0;
+    min-height: 0;
     display: flex;
     align-items: stretch;
     gap: 0.2rem;
@@ -346,12 +356,19 @@
   .hour-time {
     margin-top: 0.4rem;
     white-space: nowrap;
-    transform: rotate(-45deg);
     transform-origin: top center;
   }
 
   .calendar-events {
-    height: calc(100% - 6rem);
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .calendar-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
   }
 
   .event-marker {
@@ -364,14 +381,14 @@
     filter: grayscale(100%) contrast(1.25);
   }
 
-  @container (max-width: 700px) {
+  @container (max-width: 1100px) {
     .weather-icon {
       width: 17cqw;
       height: 17cqw;
     }
 
     .weather-condition {
-      display: none;
+      display: flex;
     }
 
     .weather-metric {
