@@ -156,19 +156,14 @@
     <section class="col--span-1 calendar-panel p--6 md:p--8 lg:p--8">
       <div
         class="flex flex--col gap--small calendar-events"
-        data-overflow="true"
-        data-overflow-counter="true"
       >
         {% assign displayed_date = "" %}
 
-        {% for event in calendar.events %}
+        {% for event in calendar.events limit: 12 %}
           {% assign event_date = event.start | date: "%a, %-d %b" %}
 
           {% if event_date != displayed_date %}
-            <span
-              class="label label--small lg:label--base label--filled group-header"
-              data-group-header="true"
-            >
+            <span class="calendar-date label label--small lg:label--base">
               {{ event_date }}
             </span>
             {% assign displayed_date = event_date %}
@@ -363,6 +358,19 @@
     flex: 1 1 0;
     min-height: 0;
     overflow: hidden;
+  }
+
+  .calendar-date {
+    flex: 0 0 auto;
+    align-self: flex-start;
+    padding: 0.15rem 0.45rem;
+    color: #fff;
+    background: #000;
+    border-radius: 0.2rem;
+  }
+
+  .calendar-event {
+    flex: 0 0 auto;
   }
 
   .calendar-panel {

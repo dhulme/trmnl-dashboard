@@ -21,6 +21,138 @@ variables:
         start_full: "2026-09-12"
         description: "\n"
         background_color: "#f691b2"
+      - end: "2026-09-13"
+        start: "2026-09-12"
+        status: confirmed
+        all_day: true
+        calname: 8l0pmpm73l9nsfa0khpp5o59m4@group.calendar.google.com
+        summary: "Mball ❄️"
+        end_full: "2026-09-13"
+        location: null
+        date_time: "2026-09-12"
+        start_full: "2026-09-12"
+        description: ""
+        background_color: "#cabdbf"
+      - end: "2026-09-14"
+        start: "2026-09-13"
+        status: confirmed
+        all_day: true
+        calname: 8l0pmpm73l9nsfa0khpp5o59m4@group.calendar.google.com
+        summary: "Pulled pork (lettuce, buns, beans, chips)"
+        end_full: "2026-09-14"
+        location: null
+        date_time: "2026-09-13"
+        start_full: "2026-09-13"
+        description: ""
+        background_color: "#cabdbf"
+      - end: "2026-09-15"
+        start: "2026-09-14"
+        status: confirmed
+        all_day: true
+        calname: ohpn2oam39jp02uub20i8os9nqp3jbkf@import.calendar.google.com
+        summary: "Granny and grandad back from holiday "
+        end_full: "2026-09-15"
+        location: null
+        date_time: "2026-09-14"
+        start_full: "2026-09-14"
+        description: "\n"
+        background_color: "#f691b2"
+      - end: "2026-09-15"
+        start: "2026-09-14"
+        status: confirmed
+        all_day: true
+        calname: dhulme2@gmail.com
+        summary: Recycling collection
+        end_full: "2026-09-15"
+        location: null
+        date_time: "2026-09-14"
+        start_full: "2026-09-14"
+        description: ""
+        background_color: "#51b749"
+      - end: "2026-09-15"
+        start: "2026-09-14"
+        status: confirmed
+        all_day: true
+        calname: 8l0pmpm73l9nsfa0khpp5o59m4@group.calendar.google.com
+        summary: "Linguine ❄️"
+        end_full: "2026-09-15"
+        location: null
+        date_time: "2026-09-14"
+        start_full: "2026-09-14"
+        description: ""
+        background_color: "#cabdbf"
+      - end: "2026-09-16"
+        start: "2026-09-15"
+        status: confirmed
+        all_day: true
+        calname: dhulme2@gmail.com
+        summary: Cancel Netflix
+        end_full: "2026-09-16"
+        location: null
+        date_time: "2026-09-15"
+        start_full: "2026-09-15"
+        description: ""
+        background_color: "#b3dc6c"
+      - end: "2026-09-16"
+        start: "2026-09-15"
+        status: confirmed
+        all_day: true
+        calname: 8l0pmpm73l9nsfa0khpp5o59m4@group.calendar.google.com
+        summary: "Sos + freezer mash + hashes + broc (box 42 = 1.5)"
+        end_full: "2026-09-16"
+        location: null
+        date_time: "2026-09-15"
+        start_full: "2026-09-15"
+        description: ""
+        background_color: "#cabdbf"
+      - end: "2026-09-17"
+        start: "2026-09-16"
+        status: confirmed
+        all_day: true
+        calname: dhulme2@gmail.com
+        summary: Niculae leaving lunch
+        end_full: "2026-09-17"
+        location: null
+        date_time: "2026-09-16"
+        start_full: "2026-09-16"
+        description: ""
+        background_color: "#b3dc6c"
+      - end: "2026-09-17"
+        start: "2026-09-16"
+        status: confirmed
+        all_day: true
+        calname: 8l0pmpm73l9nsfa0khpp5o59m4@group.calendar.google.com
+        summary: Fish?
+        end_full: "2026-09-17"
+        location: null
+        date_time: "2026-09-16"
+        start_full: "2026-09-16"
+        description: ""
+        background_color: "#cabdbf"
+      - end: "2026-09-18"
+        start: "2026-09-17"
+        status: confirmed
+        all_day: true
+        calname: 8l0pmpm73l9nsfa0khpp5o59m4@group.calendar.google.com
+        summary: "Cumin RC ❄️ (plus courgette)"
+        end_full: "2026-09-18"
+        location: null
+        date_time: "2026-09-17"
+        start_full: "2026-09-17"
+        description: ""
+        background_color: "#cabdbf"
+      - end: "2026-09-26"
+        start: "2026-09-18"
+        status: confirmed
+        all_day: true
+        calname: dhulme2@gmail.com
+        summary: Hulme parents holiday
+        end_full: "2026-09-26"
+        location: null
+        date_time: "2026-09-18"
+        start_full: "2026-09-18"
+        description: ""
+        background_color: "#b3dc6c"
     first_day: 1
     zoom_mode: false
     fixed_week: true
