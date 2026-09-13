@@ -142,10 +142,9 @@
               </span>
 
               <div class="rain-track">
-                {% assign bar_height = hour.p | times: 3 | at_least: 6 %}
                 <div
                   class="rain-bar {% if hour.p >= 50 %}rain-bar--likely{% elsif hour.p >= 25 %}rain-bar--possible{% endif %}"
-                  style="height: {{ bar_height | at_most: 100 }}%;"
+                  style="height: {{ hour.p | at_most: 100 }}%;"
                 ></div>
               </div>
 
@@ -344,18 +343,10 @@
     height: 100%;
     min-height: 6rem;
     margin: 0.5rem 0;
-    background: repeating-linear-gradient(
-      to top,
-      var(--gray-30, #ccc) 0,
-      var(--gray-30, #ccc) 1px,
-      transparent 1px,
-      transparent 25%
-    );
   }
 
   .rain-bar {
     width: 100%;
-    min-height: 3px;
     background: var(--gray-50, #888);
   }
 
