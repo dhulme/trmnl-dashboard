@@ -12,8 +12,21 @@
       <div class="col--span-3 weather-primary pr--6 md:pr--8 lg:pr--12">
         <div class="flex flex--row flex--between flex--center-y">
           <div>
+            {% assign day_number = calendar.today_in_tz | date: "%-d" | plus: 0 %}
+            {% assign day_suffix = "th" %}
+            {% assign day_mod_100 = day_number | modulo: 100 %}
+            {% if day_mod_100 < 11 or day_mod_100 > 13 %}
+              {% assign day_mod_10 = day_number | modulo: 10 %}
+              {% if day_mod_10 == 1 %}
+                {% assign day_suffix = "st" %}
+              {% elsif day_mod_10 == 2 %}
+                {% assign day_suffix = "nd" %}
+              {% elsif day_mod_10 == 3 %}
+                {% assign day_suffix = "rd" %}
+              {% endif %}
+            {% endif %}
             <span class="label label--small md:label--base lg:label--large">
-              {{ chum.loc.name }}
+              {{ calendar.today_in_tz | date: "%A" }}, {{ day_number }}<sup class="date-ordinal">{{ day_suffix }}</sup>&nbsp;{{ calendar.today_in_tz | date: "%B %Y" }}
             </span>
 
             <div class="flex flex--row flex--center-y gap--large">
@@ -230,6 +243,13 @@
   .weather-panel {
     min-height: 0;
     border-bottom: var(--border-width, 2px) solid currentColor;
+  }
+
+  .date-ordinal {
+    font-size: 0.6em;
+    line-height: 0;
+    vertical-align: super;
+    margin-top: -0.5rem;
   }
 
   .weather-primary {
