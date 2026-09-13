@@ -159,7 +159,7 @@ variables:
     date_format: short
     scroll_time: "08:00:00"
     time_format: "24_hrs"
-    today_in_tz: "2026-09-12T00:00:00.000+01:00"
+    today_in_tz: "2026-09-13T00:00:00.000+01:00"
     event_layout: rolling_month
     month_header: false
     calendar_names:

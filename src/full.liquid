@@ -130,25 +130,32 @@
       <div class="my--2 lg:my--4"></div>
 
       <div class="precipitation-chart">
+        {% assign local_timestamp = trmnl.system.timestamp_utc | plus: weather.utc_offset %}
+        {% assign current_hour = local_timestamp | date: "%H" | plus: 0 %}
+        {% assign displayed_hours = 0 %}
+
         {% for hour in chum.hourly limit: 24 %}
-          <div class="hour">
-            <span class="description description--small lg:description--base">
-              {{ hour.t }}°
-            </span>
+          {% if forloop.index0 >= current_hour and displayed_hours < 12 %}
+            <div class="hour">
+              <span class="description description--small lg:description--base">
+                {{ hour.t }}°
+              </span>
 
-            <div class="rain-track">
-              {% assign bar_height = hour.p | times: 3 | at_least: 6 %}
-              <div
-                class="rain-bar {% if hour.p >= 50 %}rain-bar--likely{% elsif hour.p >= 25 %}rain-bar--possible{% endif %}"
-                style="height: {{ bar_height | at_most: 100 }}%;"
-              ></div>
+              <div class="rain-track">
+                {% assign bar_height = hour.p | times: 3 | at_least: 6 %}
+                <div
+                  class="rain-bar {% if hour.p >= 50 %}rain-bar--likely{% elsif hour.p >= 25 %}rain-bar--possible{% endif %}"
+                  style="height: {{ bar_height | at_most: 100 }}%;"
+                ></div>
+              </div>
+
+              <span class="label label--small lg:label--base">{{ hour.p }}%</span>
+              <span class="hour-time description description--small">
+                {{ hour.tm | replace: ":00 ", " " | replace: " AM", "am" | replace: " PM", "pm" }}
+              </span>
             </div>
-
-            <span class="label label--small lg:label--base">{{ hour.p }}%</span>
-            <span class="hour-time description description--small">
-              {{ hour.tm | replace: ":00 ", " " | replace: " AM", "am" | replace: " PM", "pm" }}
-            </span>
-          </div>
+            {% assign displayed_hours = displayed_hours | plus: 1 %}
+          {% endif %}
         {% endfor %}
       </div>
     </section>
@@ -158,48 +165,60 @@
         class="flex flex--col gap--small calendar-events"
       >
         {% assign displayed_date = "" %}
+        {% assign today = calendar.today_in_tz | date: "%Y-%m-%d" %}
+        {% assign displayed_events = 0 %}
 
-        {% for event in calendar.events limit: 12 %}
-          {% assign event_date = event.start | date: "%a, %-d %b" %}
-
-          {% if event_date != displayed_date %}
-            <span class="calendar-date label label--small lg:label--base">
-              {{ event_date }}
-            </span>
-            {% assign displayed_date = event_date %}
+        {% for event in calendar.events %}
+          {% assign event_has_ended = false %}
+          {% if event.all_day and event.end <= today %}
+            {% assign event_has_ended = true %}
           {% endif %}
 
-          <div class="item calendar-event">
-            <div class="meta">
-              <span
-                class="event-marker"
-                {% if event.background_color %}
-                  style="background-color: {{ event.background_color }};"
-                {% endif %}
-              ></span>
-            </div>
+          {% unless event_has_ended %}
+            {% if displayed_events < 12 %}
+              {% assign event_date = event.start | date: "%a, %-d %b" %}
 
-            <div class="content">
-              <span
-                class="title title--small lg:title--base"
-                data-clamp="1"
-                data-clamp-lg="2"
-              >
-                {{ event.summary | strip }}
-              </span>
+              {% if event_date != displayed_date %}
+                <span class="calendar-date label label--small lg:label--base">
+                  {{ event_date }}
+                </span>
+                {% assign displayed_date = event_date %}
+              {% endif %}
 
-              <span class="description description--small lg:description--base">
-                {% if event.all_day %}
-                  All day
-                {% else %}
-                  {{ event.start | date: "%H:%M" }}–{{ event.end | date: "%H:%M" }}
-                {% endif %}
-                {% if event.location %}
-                  · {{ event.location }}
-                {% endif %}
-              </span>
-            </div>
-          </div>
+              <div class="item calendar-event">
+                <div class="meta">
+                  <span
+                    class="event-marker"
+                    {% if event.background_color %}
+                      style="background-color: {{ event.background_color }};"
+                    {% endif %}
+                  ></span>
+                </div>
+
+                <div class="content">
+                  <span
+                    class="title title--small lg:title--base"
+                    data-clamp="1"
+                    data-clamp-lg="2"
+                  >
+                    {{ event.summary | strip }}
+                  </span>
+
+                  <span class="description description--small lg:description--base">
+                    {% if event.all_day %}
+                      All day
+                    {% else %}
+                      {{ event.start | date: "%H:%M" }}–{{ event.end | date: "%H:%M" }}
+                    {% endif %}
+                    {% if event.location %}
+                      · {{ event.location }}
+                    {% endif %}
+                  </span>
+                </div>
+              </div>
+              {% assign displayed_events = displayed_events | plus: 1 %}
+            {% endif %}
+          {% endunless %}
         {% else %}
           <span class="description description--large">No upcoming events.</span>
         {% endfor %}
@@ -403,8 +422,5 @@
       padding: 0.45rem;
     }
 
-    .hour:nth-child(even) {
-      display: none;
-    }
   }
 </style>
