@@ -147,8 +147,10 @@
         {% assign current_hour = local_timestamp | date: "%H" | plus: 0 %}
         {% assign displayed_hours = 0 %}
 
-        {% for hour in chum.hourly limit: 24 %}
-          {% if forloop.index0 >= current_hour and displayed_hours < 12 %}
+        {% for hour_offset in (0..23) %}
+          {% if displayed_hours < 12 %}
+            {% assign hour_index = current_hour | plus: hour_offset | modulo: 24 %}
+            {% assign hour = chum.hourly[hour_index] %}
             <div class="hour">
               <span class="description description--small lg:description--base">
                 {{ hour.t }}°
