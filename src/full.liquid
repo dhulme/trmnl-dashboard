@@ -191,6 +191,13 @@
           {% unless event_has_ended %}
             {% if displayed_events < 12 %}
               {% assign event_date = event.start | date: "%a, %-d %b" %}
+              {% if event.all_day and event.end %}
+                {% assign event_start_day = event.start | date: "%Y-%m-%d" %}
+                {% assign event_last_day = event.end | date: "%s" | minus: 86400 | date: "%Y-%m-%d" %}
+                {% if event_last_day != event_start_day %}
+                  {% assign event_date = event.start | date: "%a, %-d %b" | append: " - " | append: event.end | date: "%s" | minus: 86400 | date: "%a, %-d %b" %}
+                {% endif %}
+              {% endif %}
 
               {% if event_date != displayed_date %}
                 <span class="calendar-date label label--small lg:label--base">
