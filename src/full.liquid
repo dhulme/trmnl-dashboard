@@ -195,7 +195,8 @@
                 {% assign event_start_day = event.start | date: "%Y-%m-%d" %}
                 {% assign event_last_day = event.end | date: "%s" | minus: 86400 | date: "%Y-%m-%d" %}
                 {% if event_last_day != event_start_day %}
-                  {% assign event_date = event.start | date: "%a, %-d %b" | append: " - " | append: event.end | date: "%s" | minus: 86400 | date: "%a, %-d %b" %}
+                  {% assign event_end_date = event_last_day | date: "%a, %-d %b" %}
+                  {% assign event_date = event_date | append: " - " | append: event_end_date %}
                 {% endif %}
               {% endif %}
 
